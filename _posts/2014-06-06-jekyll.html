@@ -1,0 +1,42 @@
+---
+layout: posts
+title: Jekyll分享
+---
+
+<h2>{{ page.title }}</h2>
+<p>简单的静态的Blog生成工具。可以将Markdown, Liquid文件转化为静态的HTML文件。</p>
+<h3>安装</h3>
+<ol>
+    <li>gem install jekyll</li>
+    <li>jekyll new my-awesome-site</li>
+    <li>cd my-awesome-site</li>
+    <li>jekyll build</li>
+    <li>jekyll serve</li>
+</ol>
+<h3>配置文件</h3>
+<p>配置文件位于项目根目录下：_config.yml。参考：http://jekyllrb.com/docs/configuration/</p>
+<p>baseurl设置基础URL。这样生成的所有链接都会以这个url为前缀。</p>
+<h3>模板语法</h3>
+<p>Liquid语法。和django的template语法非常相似。参考：http://docs.shopify.com/themes/liquid-basics</p>
+
+
+<h3>Github Pages支持</h3>
+<p>创建一个快速的，无限流量的Blog。Github Pages参考：https://pages.github.com/</p>
+<ul>
+    <li>创建一个目录：mkdir mblog</li>
+    <li>进入这个目录：cd mblog</li>
+    <li>初始化git环境：git init</li>
+    <li>创建一个gh-pages分支：git checkout --orphan gh-pages</li>
+    <li>创建设置文件：touch _config.yml</li>
+    <li>在配设置文件里添加：baseurl: /mblog</li>
+    <li>创建模板文件夹：mkdir _layouts</li>
+    <li>创建模板文件：touch _layouts/default.html。里面写自己的html部分。Liquid模板语言语法参考：https://help.github.com/articles/using-jekyll-with-pages</li>
+    <li>创建文章目录：mkdir _posts</li>
+    <li>创建一个文章：touch _posts/2014-06-06-hello-world.html。文件格式"年-月-日-文章标题.后缀名"的格式。后缀名可以是html或者md</li>
+    <li>编写文章。语法还是参考Liquid模板语言。</li>
+    <li>编写首页；touch index.html</li>
+    <li>在github上新建一个mblog的库。</li>
+    <li>发布：git add .; git commit -m 'init blog';git remote add origin https://github.com/用户名/mblog.git; git push origin gh-pages</li>
+    <li>查看：http://用户名.github.io/mblog/</li>
+</ul>
+<p>还可以使用自己的域名。参考：https://help.github.com/articles/setting-up-a-custom-domain-with-github-pages#step-1-add-a-cname-file-to-your-repository</p>
