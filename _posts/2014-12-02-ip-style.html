@@ -4,42 +4,42 @@ title: IP 范围表示法转换
 ---
 
 <h2>{{ page.title }}</h2>
-
 <pre>
-#!/bin/python
-# coding: utf-8
+<font color="#444444">#!/bin/python</font>
+<font color="#444444"># coding: utf-8</font>
 
-'''
+<font color="#008000">''</font><font color="#008000">'
 将开始地址和结束地址表示的IP范围转换为
 192.168.0.0/24
 格式的地址
-'''
+'</font><font color="#008000">''</font>
 
-'''
+<font color="#008000">''</font><font color="#008000">'
 @ips 起始IP
 @ipe 结束IP
 @return 192.168.0.0/24 格式的IP范围表示法
-'''
-def do(ips, ipe):
-    #TODO: 对输入数据是否为IP地址做校验
-    ipsnum = 0
-    for i in ips.split('.'):
-        ipsnum = (ipsnum << 4) + int(i)
-    ipenum = 0
-    for i in ipe.split('.'):
-        ipenum = (ipenum << 4) + int(i)
-    ipend = ipsnum ^ ipenum
-    zero_num = 0
-    while ipend != 0:
-        ipend = (ipend>>1)
-        zero_num = zero_num + 1
-    zero_num = 32 - zero_num
-    return '%s/%d' % (ips, zero_num)
+'</font><font color="#008000">''</font>
+<font color="#2040a0">def</font> <font color="#2040a0">do</font><font color="4444FF">(</font><font color="#2040a0">ips</font>, <font color="#2040a0">ipe</font><font color="4444FF">)</font><font color="4444FF">:</font>
+    <font color="#444444">#TODO: 对输入数据是否为IP地址做校验</font>
+    <font color="#2040a0">ipsnum</font> <font color="4444FF">=</font> <font color="#FF0000">0</font>
+    <strong>for</strong> <font color="#2040a0">i</font> <strong>in</strong> <font color="#2040a0">ips</font>.<font color="#2040a0">split</font><font color="4444FF">(</font><font color="#008000">'.'</font><font color="4444FF">)</font><font color="4444FF">:</font>
+        <font color="#2040a0">ipsnum</font> <font color="4444FF">=</font> <font color="4444FF">(</font><font color="#2040a0">ipsnum</font> <font color="4444FF">&lt;</font><font color="4444FF">&lt;</font> <font color="#FF0000">4</font><font color="4444FF">)</font> <font color="4444FF">+</font> <font color="#2040a0">int</font><font color="4444FF">(</font><font color="#2040a0">i</font><font color="4444FF">)</font>
+    <font color="#2040a0">ipenum</font> <font color="4444FF">=</font> <font color="#FF0000">0</font>
+    <strong>for</strong> <font color="#2040a0">i</font> <strong>in</strong> <font color="#2040a0">ipe</font>.<font color="#2040a0">split</font><font color="4444FF">(</font><font color="#008000">'.'</font><font color="4444FF">)</font><font color="4444FF">:</font>
+        <font color="#2040a0">ipenum</font> <font color="4444FF">=</font> <font color="4444FF">(</font><font color="#2040a0">ipenum</font> <font color="4444FF">&lt;</font><font color="4444FF">&lt;</font> <font color="#FF0000">4</font><font color="4444FF">)</font> <font color="4444FF">+</font> <font color="#2040a0">int</font><font color="4444FF">(</font><font color="#2040a0">i</font><font color="4444FF">)</font>
+    <font color="#2040a0">ipend</font> <font color="4444FF">=</font> <font color="#2040a0">ipsnum</font> ^ <font color="#2040a0">ipenum</font>
+    <font color="#2040a0">zero_num</font> <font color="4444FF">=</font> <font color="#FF0000">0</font>
+    <strong>while</strong> <font color="#2040a0">ipend</font> <font color="4444FF">!</font><font color="4444FF">=</font> <font color="#FF0000">0</font><font color="4444FF">:</font>
+        <font color="#2040a0">ipend</font> <font color="4444FF">=</font> <font color="4444FF">(</font><font color="#2040a0">ipend</font><font color="4444FF">&gt;</font><font color="4444FF">&gt;</font><font color="#FF0000">1</font><font color="4444FF">)</font>
+        <font color="#2040a0">zero_num</font> <font color="4444FF">=</font> <font color="#2040a0">zero_num</font> <font color="4444FF">+</font> <font color="#FF0000">1</font>
+    <font color="#2040a0">zero_num</font> <font color="4444FF">=</font> <font color="#FF0000">32</font> <font color="4444FF">-</font> <font color="#2040a0">zero_num</font>
+    <strong>return</strong> <font color="#008000">'%s/%d'</font> <font color="4444FF">%</font> <font color="4444FF">(</font><font color="#2040a0">ips</font>, <font color="#2040a0">zero_num</font><font color="4444FF">)</font>
 
-if __name__ == '__main__':
-    import sys
-    if len(sys.argv) < 3:
-        print 'bad'
-    else:
-        print do(sys.argv[1], sys.argv[2])
+<strong>if</strong> <font color="#2040a0">__name__</font> <font color="4444FF">=</font><font color="4444FF">=</font> <font color="#008000">'__main__'</font><font color="4444FF">:</font>
+    <strong>import</strong> <font color="#2040a0">sys</font>
+    <strong>if</strong> <font color="#2040a0">len</font><font color="4444FF">(</font><font color="#2040a0">sys</font>.<font color="#2040a0">argv</font><font color="4444FF">)</font> <font color="4444FF">&lt;</font> <font color="#FF0000">3</font><font color="4444FF">:</font>
+        <strong>print</strong> <font color="#008000">'bad'</font>
+    <strong>else</strong><font color="4444FF">:</font>
+        <strong>print</strong> <font color="#2040a0">do</font><font color="4444FF">(</font><font color="#2040a0">sys</font>.<font color="#2040a0">argv</font><font color="4444FF">[</font><font color="#FF0000">1</font><font color="4444FF">]</font>, <font color="#2040a0">sys</font>.<font color="#2040a0">argv</font><font color="4444FF">[</font><font color="#FF0000">2</font><font color="4444FF">]</font><font color="4444FF">)</font>
+
 </pre>
