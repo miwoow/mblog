@@ -5,44 +5,44 @@ title: IP 范围表示法转换
 
 <h2>{{ page.title }}</h2>
 
-<p>注视都在代码里。</p>
+<p>注释都在代码里。</p>
 
-<pre style="margin-left:20px;">
-<font color="#444444">#!/bin/python</font>
-<font color="#444444"># coding: utf-8</font>
-
-<font color="#008000">''</font><font color="#008000">'
-将开始地址和结束地址表示的IP范围转换为
-192.168.0.0/24
-格式的地址
-'</font><font color="#008000">''</font>
-
-<font color="#008000">''</font><font color="#008000">'
-@ips 起始IP
-@ipe 结束IP
-@return 192.168.0.0/24 格式的IP范围表示法
-'</font><font color="#008000">''</font>
-<font color="#2040a0">def</font> <font color="#2040a0">do</font><font color="4444FF">(</font><font color="#2040a0">ips</font>, <font color="#2040a0">ipe</font><font color="4444FF">)</font><font color="4444FF">:</font>
-    <font color="#444444">#TODO: 对输入数据是否为IP地址做校验</font>
-    <font color="#2040a0">ipsnum</font> <font color="4444FF">=</font> <font color="#FF0000">0</font>
-    <strong>for</strong> <font color="#2040a0">i</font> <strong>in</strong> <font color="#2040a0">ips</font>.<font color="#2040a0">split</font><font color="4444FF">(</font><font color="#008000">'.'</font><font color="4444FF">)</font><font color="4444FF">:</font>
-        <font color="#2040a0">ipsnum</font> <font color="4444FF">=</font> <font color="4444FF">(</font><font color="#2040a0">ipsnum</font> <font color="4444FF">&lt;</font><font color="4444FF">&lt;</font> <font color="#FF0000">4</font><font color="4444FF">)</font> <font color="4444FF">+</font> <font color="#2040a0">int</font><font color="4444FF">(</font><font color="#2040a0">i</font><font color="4444FF">)</font>
-    <font color="#2040a0">ipenum</font> <font color="4444FF">=</font> <font color="#FF0000">0</font>
-    <strong>for</strong> <font color="#2040a0">i</font> <strong>in</strong> <font color="#2040a0">ipe</font>.<font color="#2040a0">split</font><font color="4444FF">(</font><font color="#008000">'.'</font><font color="4444FF">)</font><font color="4444FF">:</font>
-        <font color="#2040a0">ipenum</font> <font color="4444FF">=</font> <font color="4444FF">(</font><font color="#2040a0">ipenum</font> <font color="4444FF">&lt;</font><font color="4444FF">&lt;</font> <font color="#FF0000">4</font><font color="4444FF">)</font> <font color="4444FF">+</font> <font color="#2040a0">int</font><font color="4444FF">(</font><font color="#2040a0">i</font><font color="4444FF">)</font>
-    <font color="#2040a0">ipend</font> <font color="4444FF">=</font> <font color="#2040a0">ipsnum</font> ^ <font color="#2040a0">ipenum</font>
-    <font color="#2040a0">zero_num</font> <font color="4444FF">=</font> <font color="#FF0000">0</font>
-    <strong>while</strong> <font color="#2040a0">ipend</font> <font color="4444FF">!</font><font color="4444FF">=</font> <font color="#FF0000">0</font><font color="4444FF">:</font>
-        <font color="#2040a0">ipend</font> <font color="4444FF">=</font> <font color="4444FF">(</font><font color="#2040a0">ipend</font><font color="4444FF">&gt;</font><font color="4444FF">&gt;</font><font color="#FF0000">1</font><font color="4444FF">)</font>
-        <font color="#2040a0">zero_num</font> <font color="4444FF">=</font> <font color="#2040a0">zero_num</font> <font color="4444FF">+</font> <font color="#FF0000">1</font>
-    <font color="#2040a0">zero_num</font> <font color="4444FF">=</font> <font color="#FF0000">32</font> <font color="4444FF">-</font> <font color="#2040a0">zero_num</font>
-    <strong>return</strong> <font color="#008000">'%s/%d'</font> <font color="4444FF">%</font> <font color="4444FF">(</font><font color="#2040a0">ips</font>, <font color="#2040a0">zero_num</font><font color="4444FF">)</font>
-
-<strong>if</strong> <font color="#2040a0">__name__</font> <font color="4444FF">=</font><font color="4444FF">=</font> <font color="#008000">'__main__'</font><font color="4444FF">:</font>
-    <strong>import</strong> <font color="#2040a0">sys</font>
-    <strong>if</strong> <font color="#2040a0">len</font><font color="4444FF">(</font><font color="#2040a0">sys</font>.<font color="#2040a0">argv</font><font color="4444FF">)</font> <font color="4444FF">&lt;</font> <font color="#FF0000">3</font><font color="4444FF">:</font>
-        <strong>print</strong> <font color="#008000">'bad'</font>
-    <strong>else</strong><font color="4444FF">:</font>
-        <strong>print</strong> <font color="#2040a0">do</font><font color="4444FF">(</font><font color="#2040a0">sys</font>.<font color="#2040a0">argv</font><font color="4444FF">[</font><font color="#FF0000">1</font><font color="4444FF">]</font>, <font color="#2040a0">sys</font>.<font color="#2040a0">argv</font><font color="4444FF">[</font><font color="#FF0000">2</font><font color="4444FF">]</font><font color="4444FF">)</font>
+<pre>
+<a name="line1" href="#line1"> 1</a> <font color="#444444">#!/bin/python</font>
+<a name="line2" href="#line2"> 2</a> <font color="#444444"># coding: utf-8</font>
+<a name="line3" href="#line3"> 3</a> 
+<a name="line4" href="#line4"> 4</a> <font color="#008000">''</font><font color="#008000">'
+<a name="line5" href="#line5"> 5</a> 将开始地址和结束地址表示的IP范围转换为
+<a name="line6" href="#line6"> 6</a> 192.168.0.0/24
+<a name="line7" href="#line7"> 7</a> 格式的地址
+<a name="line8" href="#line8"> 8</a> '</font><font color="#008000">''</font>
+<a name="line9" href="#line9"> 9</a> 
+<a name="line10" href="#line10">10</a> <font color="#008000">''</font><font color="#008000">'
+<a name="line11" href="#line11">11</a> @ips 起始IP
+<a name="line12" href="#line12">12</a> @ipe 结束IP
+<a name="line13" href="#line13">13</a> @return 192.168.0.0/24 格式的IP范围表示法
+<a name="line14" href="#line14">14</a> '</font><font color="#008000">''</font>
+<a name="line15" href="#line15">15</a> <font color="#2040a0">def</font> <font color="#2040a0">do</font><font color="4444FF">(</font><font color="#2040a0">ips</font>, <font color="#2040a0">ipe</font><font color="4444FF">)</font><font color="4444FF">:</font>
+<a name="line16" href="#line16">16</a>     <font color="#444444">#TODO: 对输入数据是否为IP地址做校验</font>
+<a name="line17" href="#line17">17</a>     <font color="#2040a0">ipsnum</font> <font color="4444FF">=</font> <font color="#FF0000">0</font>
+<a name="line18" href="#line18">18</a>     <strong>for</strong> <font color="#2040a0">i</font> <strong>in</strong> <font color="#2040a0">ips</font>.<font color="#2040a0">split</font><font color="4444FF">(</font><font color="#008000">'.'</font><font color="4444FF">)</font><font color="4444FF">:</font>
+<a name="line19" href="#line19">19</a>         <font color="#2040a0">ipsnum</font> <font color="4444FF">=</font> <font color="4444FF">(</font><font color="#2040a0">ipsnum</font> <font color="4444FF">&lt;</font><font color="4444FF">&lt;</font> <font color="#FF0000">4</font><font color="4444FF">)</font> <font color="4444FF">+</font> <font color="#2040a0">int</font><font color="4444FF">(</font><font color="#2040a0">i</font><font color="4444FF">)</font>
+<a name="line20" href="#line20">20</a>     <font color="#2040a0">ipenum</font> <font color="4444FF">=</font> <font color="#FF0000">0</font>
+<a name="line21" href="#line21">21</a>     <strong>for</strong> <font color="#2040a0">i</font> <strong>in</strong> <font color="#2040a0">ipe</font>.<font color="#2040a0">split</font><font color="4444FF">(</font><font color="#008000">'.'</font><font color="4444FF">)</font><font color="4444FF">:</font>
+<a name="line22" href="#line22">22</a>         <font color="#2040a0">ipenum</font> <font color="4444FF">=</font> <font color="4444FF">(</font><font color="#2040a0">ipenum</font> <font color="4444FF">&lt;</font><font color="4444FF">&lt;</font> <font color="#FF0000">4</font><font color="4444FF">)</font> <font color="4444FF">+</font> <font color="#2040a0">int</font><font color="4444FF">(</font><font color="#2040a0">i</font><font color="4444FF">)</font>
+<a name="line23" href="#line23">23</a>     <font color="#2040a0">ipend</font> <font color="4444FF">=</font> <font color="#2040a0">ipsnum</font> ^ <font color="#2040a0">ipenum</font>
+<a name="line24" href="#line24">24</a>     <font color="#2040a0">zero_num</font> <font color="4444FF">=</font> <font color="#FF0000">0</font>
+<a name="line25" href="#line25">25</a>     <strong>while</strong> <font color="#2040a0">ipend</font> <font color="4444FF">!</font><font color="4444FF">=</font> <font color="#FF0000">0</font><font color="4444FF">:</font>
+<a name="line26" href="#line26">26</a>         <font color="#2040a0">ipend</font> <font color="4444FF">=</font> <font color="4444FF">(</font><font color="#2040a0">ipend</font><font color="4444FF">&gt;</font><font color="4444FF">&gt;</font><font color="#FF0000">1</font><font color="4444FF">)</font>
+<a name="line27" href="#line27">27</a>         <font color="#2040a0">zero_num</font> <font color="4444FF">=</font> <font color="#2040a0">zero_num</font> <font color="4444FF">+</font> <font color="#FF0000">1</font>
+<a name="line28" href="#line28">28</a>     <font color="#2040a0">zero_num</font> <font color="4444FF">=</font> <font color="#FF0000">32</font> <font color="4444FF">-</font> <font color="#2040a0">zero_num</font>
+<a name="line29" href="#line29">29</a>     <strong>return</strong> <font color="#008000">'%s/%d'</font> <font color="4444FF">%</font> <font color="4444FF">(</font><font color="#2040a0">ips</font>, <font color="#2040a0">zero_num</font><font color="4444FF">)</font>
+<a name="line30" href="#line30">30</a> 
+<a name="line31" href="#line31">31</a> <strong>if</strong> <font color="#2040a0">__name__</font> <font color="4444FF">=</font><font color="4444FF">=</font> <font color="#008000">'__main__'</font><font color="4444FF">:</font>
+<a name="line32" href="#line32">32</a>     <strong>import</strong> <font color="#2040a0">sys</font>
+<a name="line33" href="#line33">33</a>     <strong>if</strong> <font color="#2040a0">len</font><font color="4444FF">(</font><font color="#2040a0">sys</font>.<font color="#2040a0">argv</font><font color="4444FF">)</font> <font color="4444FF">&lt;</font> <font color="#FF0000">3</font><font color="4444FF">:</font>
+<a name="line34" href="#line34">34</a>         <strong>print</strong> <font color="#008000">'bad'</font>
+<a name="line35" href="#line35">35</a>     <strong>else</strong><font color="4444FF">:</font>
+<a name="line36" href="#line36">36</a>         <strong>print</strong> <font color="#2040a0">do</font><font color="4444FF">(</font><font color="#2040a0">sys</font>.<font color="#2040a0">argv</font><font color="4444FF">[</font><font color="#FF0000">1</font><font color="4444FF">]</font>, <font color="#2040a0">sys</font>.<font color="#2040a0">argv</font><font color="4444FF">[</font><font color="#FF0000">2</font><font color="4444FF">]</font><font color="4444FF">)</font>
 
 </pre>
