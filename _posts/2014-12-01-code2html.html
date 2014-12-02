@@ -1,0 +1,23 @@
+---
+layout: posts
+title: code2html 使用
+---
+
+<h2>{{ page.title }}</h2>
+<p>像我这样的写博客。</p>
+<ul>
+    <li>使用html</li>
+    <li>基本不使用样式</li>
+</ul>
+<p>在遇到需要张贴代码的时候，就会有问题了。</p>
+
+<p>直接张贴上去的代码使用pre标签之后，虽然格式保持的挺好，但是没有语法高亮，让人很郁闷。於是找到了这个code2html的工具，可以将各种代码转换为高亮显示的html内容。</p>
+<p>哈哈！不用担心CSS调来调去都不满意了。坚持html写博客吧！</p>
+
+<h3>Ubuntu 系统</h3>
+<pre>
+sudo apt-get install code2html
+
+code2html -N code.py out.html
+</pre>
+<strong>-N 是表示，生成带超链接的行号。</strong>
