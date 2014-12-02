@@ -1,0 +1,45 @@
+---
+layout: posts
+title: IP 范围表示法转换
+---
+
+<h2>{{ page.title }}</h2>
+
+<pre>
+#!/bin/python
+# coding: utf-8
+
+'''
+将开始地址和结束地址表示的IP范围转换为
+192.168.0.0/24
+格式的地址
+'''
+
+'''
+@ips 起始IP
+@ipe 结束IP
+@return 192.168.0.0/24 格式的IP范围表示法
+'''
+def do(ips, ipe):
+    #TODO: 对输入数据是否为IP地址做校验
+    ipsnum = 0
+    for i in ips.split('.'):
+        ipsnum = (ipsnum << 4) + int(i)
+    ipenum = 0
+    for i in ipe.split('.'):
+        ipenum = (ipenum << 4) + int(i)
+    ipend = ipsnum ^ ipenum
+    zero_num = 0
+    while ipend != 0:
+        ipend = (ipend>>1)
+        zero_num = zero_num + 1
+    zero_num = 32 - zero_num
+    return '%s/%d' % (ips, zero_num)
+
+if __name__ == '__main__':
+    import sys
+    if len(sys.argv) < 3:
+        print 'bad'
+    else:
+        print do(sys.argv[1], sys.argv[2])
+</pre>
