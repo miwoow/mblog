@@ -5,7 +5,7 @@ title: 212.020.096.000 这个IP为什么是错误？
 
 <h2>{{ page.title }}</h2>
 
-<p>今天在处理一对的IP范围的时候，遇到程序异常退出的情况。看log，发现是这个IP导致的。</p>
+<p>今天在处理一对的IP范围的时候。使用inet_aton()将IP地址转为uint32_t的时候，遇到程序异常退出的情况。看log，发现是这个IP导致的。</p>
 <p>但是为什么这个IP是一个非法的IP呢？虽然我一直认为020，096之类的可能有问题。但是在前面212.020.020.000这个IP却是没事的。看来问题出在096上。</p>
 
 <br />
@@ -14,7 +14,14 @@ title: 212.020.096.000 这个IP为什么是错误？
 
 <br />
 <p>后来，巧合中发现那些包含020的IP地址在转换的时候虽然没有错误，但是最后的结果却是不对的。<p>
-<p>突然想起来，020其实是一个8进制数。也就是说在程序处理的时候，会将020当作16来处理。而096会出错是因为9是一个非法的8进制表示。去掉了IP表示中的一些前置0之后，果然程序不再报错，结果也都正确。</p>
+<p>突然想起来，020其实是一个8进制数。也就是说,在程序处理的时候，会将020当作16来处理。而096会出错是因为9是一个非法的8进制表示。去掉了IP表示中的一些前置0之后，果然程序不再报错，结果也都正确。</p>
 
 <br />
-<p>其实，在日常写代码的时候大部分再使用10进制和16进制。还有位运算。很少用到8进制数。结果就忽略了这些数字前面的前置0会导致8进制的运算。</p>
+<p>其实，在日常写代码的时候大部分在使用10进制和16进制。还有位运算。很少用到8进制数。结果就忽略了这些数字的前置0会导致8进制的运算。</p>
+
+<p>后来又仔细看了以下man inet_ntoa()的手册。发现下面这段：</p>
+<pre>
+In all of the above forms, components of the dotted address can be specified in decimal, octal (with a leading 0), or  hexadecimal,  with  a leading 0X).  Addresses in any of these forms are collectively termed IPV4 numbers-and-dots notation.  The form that uses exactly four decimal numbers is referred to as IPv4 dotted-decimal notation (or sometimes: IPv4 dotted-quad notation).
+</pre>
+<p>大致意思就是说，这个函数在处理IP的时候。这些IP的点分数字，可以使用8进制，16进制和10进制表示。8进制表示前置0，16进制表示，前置0x。</p>
+<p>还是自己大意了！</p>
