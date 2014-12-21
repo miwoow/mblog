@@ -1,0 +1,13 @@
+---
+layout: posts
+title: ubuntu 安装 chromium 和 flash 插件
+---
+<h2>{{ page.title }}</h2>
+
+<p>啥也不说了，直接上代码：</p>
+<pre>
+sudo apt-get install chromium-browser
+sudo apt-get install pepperflashplugin-nonfree
+</pre>
+<p>就是这个诡异的东西。ubuntu下给chromium-browser安装flash插件，不能像网上说的那样，拷贝从adobe下载下来的那个.so文件。而是要安装pepperflashplugin-nonfree。</p>
+<p>原因未知</p>
