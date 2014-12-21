@@ -1,0 +1,22 @@
+---
+layout: posts
+title: C++ 中打印uint8_t类型
+---
+
+<h2>{{ page.title }}</h2>
+
+<p>今天写段代码，给一个变量赋值为1之后。使用</p>
+<pre>
+uint8_t num;
+num = 1;
+cout << num << endl;
+</pre>
+<p>竟然打印不出来。苦恼了好久。gdb 中打印出来的确实对的。</p>
+<p>后来，无意之中将num改为了100。打印出来的竟然是d。</p>
+<p>到这里。才终于意识到原因在哪儿了。100就是d的ASCII码表示。看了我在cout的时候，程序应该是把num当作一个字符来处理了。系统中的uint8_t其实就是unsigned char类型。cout输出的时候自然就会当作一个字符来输出。</p>
+
+<pre>
+cout << (int)num << endl;
+</pre>
+
+输出正确了。
