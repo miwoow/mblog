@@ -1,0 +1,35 @@
+---
+layout: posts
+title: 内网聊天系统搭建
+---
+
+<h2>{{ title }}</h2>
+
+<p>这几天在客户这里驻场开发。由于一些网络环境的限制，开发环境无法上网。所以就诞生了搭建内网通信环境，聊天系统的需求。</p>
+
+<p>早就知道使用xmpp协议的gtalk诞生之后，一些开源的使用xmpp的客户端，服务端绝对不少。所以直接查找相关内容。</p>
+
+<p>客户端选择了pidgin，服务端采用了ejabberd。因为配置简单</p>
+<pre>
+客户端：
+sudo apt-get install pidgin
+</pre>
+
+<pre>
+服务端：
+sudo apt-get install ejabberd
+</pre>
+<h3>配置hosts</h3>
+<p>打开/etc/ejabberd/ejabber.cfg找到配置hosts的地方。将自己的IP地址添加到后面。</p>
+
+<h3>注册用户</h3>
+<pre>
+ejabberdctl register example 192.168.1.1 123
+
+example 是用户名
+192.168.1.1 是服务器IP
+123 是密码
+</pre>
+
+<h3>pidgin添加好友</h3>
+<p>pidgin添加好友的时候，需要填写example@192.168.1.1而不能只填写用户名。</p>
