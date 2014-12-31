@@ -1,0 +1,143 @@
+---
+layout: posts
+title: 12306 密码分析
+---
+
+<h2>{{ page.title }}</h2>
+
+<p>前几天，得到了12306的一批可登录密码。就是网络上风传的那些。当场就打算分析以下。可惜一直都没时间。一直到昨天晚上才有点时间，看了看。</p>
+
+<p>分析的目地不是为了给一些网站带来侵害，而是为了找到这些真是数据之间的联系和信息。挖掘一些有意思的事情。</p>
+
+<p>首先，一个脚本把数据分割了一下，导入到了mongodb中。</p>
+<pre>
+#!/python
+#coding:utf-8
+
+from pymongo import MongoClient
+
+def file_to_mongo(collection):
+    f = file('12306.txt', 'r')
+    for line in f.readlines():
+        data = {}
+        segs = line.split('----', 7)
+        mail_name, mail_host = segs[0].split('@')
+        data['mail_name'] = mail_name
+        data['mail_host'] = mail_host
+        data['username'] = segs[1]
+        data['real_name'] = segs[2]
+        data['code'] = segs[3]
+        data['pass2'] = segs[4]
+        data['phone'] = segs[5]
+        if len(data['code']) != 18:
+            print line.strip()
+        else:
+            collection.insert(data)
+
+
+if __name__ == '__main__':
+    client = MongoClient('mongodb://localhost:27017/')
+    db = client.info
+    collection = db.person_12306
+    file_to_mongo(collection)
+
+</pre>
+<p>这里对于身份证号不正确的用户直接过滤掉了。因为身份证号不对的用户，基本可以断定是伪造的帐号，即使可以登录12306，意义也不大。因为我们的分析目标是为了找到真实数据之间的关系么。排除伪造数据也算是一个目标。</p>
+<p>在这里，我把邮箱地址分为了mail_name和mail_host两个字段。是为了将来方便分析一些数据。</p>
+<p>第一个想看看的就是<strong>哪些邮箱使用的最多</strong>。</p>
+<pre>
+{ "_id" : "qq.com", "value" : 73364 }
+{ "_id" : "163.com", "value" : 30394 }
+{ "_id" : "126.com", "value" : 11841 }
+{ "_id" : "sina.com", "value" : 4889 }
+{ "_id" : "hotmail.com", "value" : 1925 }
+{ "_id" : "yahoo.com.cn", "value" : 1770 }
+{ "_id" : "vip.qq.com", "value" : 1676 }
+{ "_id" : "gmail.com", "value" : 1558 }
+{ "_id" : "sohu.com", "value" : 1099 }
+{ "_id" : "yahoo.cn", "value" : 544 }
+{ "_id" : "yeah.net", "value" : 359 }
+{ "_id" : "tom.com", "value" : 350 }
+{ "_id" : "21cn.com", "value" : 295 }
+{ "_id" : "foxmail.com", "value" : 214 }
+{ "_id" : "139.com", "value" : 174 }
+{ "_id" : "live.cn", "value" : 173 }
+{ "_id" : "msn.com", "value" : 140 }
+{ "_id" : "vip.sina.com", "value" : 90 }
+{ "_id" : "sina.com.cn", "value" : 69 }
+{ "_id" : "189.cn", "value" : 43 }
+</pre>
+<p>有这么多的QQ, 163, 126, sina邮箱很正常。但是hotmail和yahoo.com.cn排名这么考前，有点出乎我的意料。这两个邮箱应该很少人用才对。反正我周围没有见到有人用这两种邮箱的人。</p>
+<p>看一眼使用较少的邮箱。</p>
+<pre>
+{ "_id" : "123456.cn", "value" : 1 }
+{ "_id" : "12530.com", "value" : 1 }
+{ "_id" : "163.com.cn", "value" : 1 }
+{ "_id" : "2008.sina.com", "value" : 1 }
+{ "_id" : "230jm.com", "value" : 1 }
+{ "_id" : "263net.com", "value" : 1 }
+{ "_id" : "2911.net", "value" : 1 }
+{ "_id" : "3158.cn", "value" : 1 }
+{ "_id" : "32321.com", "value" : 1 }
+{ "_id" : "330.com", "value" : 1 }
+{ "_id" : "3417.com", "value" : 1 }
+{ "_id" : "51299877.cn", "value" : 1 }
+{ "_id" : "56sj.com", "value" : 1 }
+{ "_id" : "58.com", "value" : 1 }
+{ "_id" : "81890.net", "value" : 1 }
+{ "_id" : "88view.com", "value" : 1 }
+{ "_id" : "a78523a.com", "value" : 1 }
+{ "_id" : "abc.com", "value" : 1 }
+{ "_id" : "acejet.com.cn", "value" : 1 }
+{ "_id" : "adcas.cn", "value" : 1 }
+</pre>
+<p>好像没什么意义，貌似都是假邮箱。这些假邮箱如果也能登录的话，难道是当初系统内的测试数据，没有清空？没什么用处。</p>
+<p>对了，共有229中邮箱服务器被使用。当然算上了我认为是假冒的邮件服务器。超过10个人使用的邮件服务器才28个。所以剩下的那些邮件服务器很可能都是假的。我估计大概被大家使用的邮件服务器也就是二十几个，或者更少。</p>
+
+<p>然后呢，我又从<strong>年龄</strong>的角度来看以下这些数据。出生年份最多的。</p>
+<pre>
+{ "_id" : "1989", "value" : 15287 }
+{ "_id" : "1988", "value" : 14894 }
+{ "_id" : "1987", "value" : 13579 }
+{ "_id" : "1990", "value" : 12974 }
+{ "_id" : "1986", "value" : 11189 }
+{ "_id" : "1991", "value" : 8478 }
+{ "_id" : "1985", "value" : 8372 }
+{ "_id" : "1984", "value" : 6681 }
+{ "_id" : "1992", "value" : 5676 }
+{ "_id" : "1983", "value" : 5629 }
+{ "_id" : "1982", "value" : 5155 }
+{ "_id" : "1993", "value" : 3850 }
+{ "_id" : "1981", "value" : 3409 }
+{ "_id" : "1994", "value" : 2329 }
+{ "_id" : "1980", "value" : 2071 }
+{ "_id" : "1979", "value" : 1599 }
+{ "_id" : "1995", "value" : 1373 }
+{ "_id" : "1978", "value" : 1143 }
+{ "_id" : "1977", "value" : 794 }
+{ "_id" : "1976", "value" : 581 }
+</pre>
+<p>这个结果基本符合预期。但是换个顺序之后的结果就很吓人了。</p>
+<pre>
+{ "_id" : "1920", "value" : 1 }
+{ "_id" : "2003", "value" : 1 }
+{ "_id" : "2005", "value" : 1 }
+{ "_id" : "2008", "value" : 1 }
+{ "_id" : "2010", "value" : 1 }
+{ "_id" : "2011", "value" : 1 }
+{ "_id" : "2014", "value" : 1 }
+{ "_id" : "1933", "value" : 2 }
+{ "_id" : "1934", "value" : 2 }
+{ "_id" : "2001", "value" : 2 }
+{ "_id" : "2004", "value" : 2 }
+{ "_id" : "2009", "value" : 2 }
+{ "_id" : "1927", "value" : 3 }
+{ "_id" : "1939", "value" : 3 }
+{ "_id" : "1941", "value" : 3 }
+{ "_id" : "2002", "value" : 3 }
+{ "_id" : "2007", "value" : 3 }
+{ "_id" : "1944", "value" : 6 }
+{ "_id" : "1937", "value" : 7 }
+{ "_id" : "2000", "value" : 7 }
+</pre>
+<p>既有九十多岁高龄的老爷爷，也有0岁的小娃娃。合适了几个。其实都是些80后。</p>
