@@ -9,6 +9,8 @@ title: 12306 密码分析
 
 <p>分析的目地不是为了给一些网站带来侵害，而是为了找到这些真是数据之间的联系和信息。挖掘一些有意思的事情。</p>
 
+<p>发现2349个帐号是重复的。</p>
+
 <p>首先，一个脚本把数据分割了一下，导入到了mongodb中。</p>
 <pre>
 #!/python
@@ -16,11 +18,15 @@ title: 12306 密码分析
 
 from pymongo import MongoClient
 
+mails = []
+
 def file_to_mongo(collection):
     f = file('12306.txt', 'r')
     for line in f.readlines():
         data = {}
         segs = line.split('----', 7)
+        if segs[0] in mails:
+            continue
         mail_name, mail_host = segs[0].split('@')
         data['mail_name'] = mail_name
         data['mail_host'] = mail_host
@@ -46,25 +52,25 @@ if __name__ == '__main__':
 <p>在这里，我把邮箱地址分为了mail_name和mail_host两个字段。是为了将来方便分析一些数据。</p>
 <p>第一个想看看的就是<strong>哪些邮箱使用的最多</strong>。</p>
 <pre>
-{ "_id" : "qq.com", "value" : 73364 }
-{ "_id" : "163.com", "value" : 30394 }
-{ "_id" : "126.com", "value" : 11841 }
-{ "_id" : "sina.com", "value" : 4889 }
-{ "_id" : "hotmail.com", "value" : 1925 }
-{ "_id" : "yahoo.com.cn", "value" : 1770 }
-{ "_id" : "vip.qq.com", "value" : 1676 }
-{ "_id" : "gmail.com", "value" : 1558 }
-{ "_id" : "sohu.com", "value" : 1099 }
-{ "_id" : "yahoo.cn", "value" : 544 }
-{ "_id" : "yeah.net", "value" : 359 }
-{ "_id" : "tom.com", "value" : 350 }
-{ "_id" : "21cn.com", "value" : 295 }
-{ "_id" : "foxmail.com", "value" : 214 }
-{ "_id" : "139.com", "value" : 174 }
-{ "_id" : "live.cn", "value" : 173 }
-{ "_id" : "msn.com", "value" : 140 }
-{ "_id" : "vip.sina.com", "value" : 90 }
-{ "_id" : "sina.com.cn", "value" : 69 }
+{ "_id" : "qq.com", "value" : 72019 }
+{ "_id" : "163.com", "value" : 29851 }
+{ "_id" : "126.com", "value" : 11664 }
+{ "_id" : "sina.com", "value" : 4781 }
+{ "_id" : "hotmail.com", "value" : 1899 }
+{ "_id" : "yahoo.com.cn", "value" : 1737 }
+{ "_id" : "vip.qq.com", "value" : 1640 }
+{ "_id" : "gmail.com", "value" : 1539 }
+{ "_id" : "sohu.com", "value" : 1086 }
+{ "_id" : "yahoo.cn", "value" : 533 }
+{ "_id" : "tom.com", "value" : 347 }
+{ "_id" : "yeah.net", "value" : 345 }
+{ "_id" : "21cn.com", "value" : 292 }
+{ "_id" : "foxmail.com", "value" : 210 }
+{ "_id" : "139.com", "value" : 173 }
+{ "_id" : "live.cn", "value" : 171 }
+{ "_id" : "msn.com", "value" : 137 }
+{ "_id" : "vip.sina.com", "value" : 89 }
+{ "_id" : "sina.com.cn", "value" : 68 }
 { "_id" : "189.cn", "value" : 43 }
 </pre>
 <p>有这么多的QQ, 163, 126, sina邮箱很正常。但是hotmail和yahoo.com.cn排名这么考前，有点出乎我的意料。这两个邮箱应该很少人用才对。反正我周围没有见到有人用这两种邮箱的人。</p>
@@ -96,26 +102,26 @@ if __name__ == '__main__':
 
 <p>然后呢，我又从<strong>年龄</strong>的角度来看以下这些数据。出生年份最多的。</p>
 <pre>
-{ "_id" : "1989", "value" : 15287 }
-{ "_id" : "1988", "value" : 14894 }
-{ "_id" : "1987", "value" : 13579 }
-{ "_id" : "1990", "value" : 12974 }
-{ "_id" : "1986", "value" : 11189 }
-{ "_id" : "1991", "value" : 8478 }
-{ "_id" : "1985", "value" : 8372 }
-{ "_id" : "1984", "value" : 6681 }
-{ "_id" : "1992", "value" : 5676 }
-{ "_id" : "1983", "value" : 5629 }
-{ "_id" : "1982", "value" : 5155 }
-{ "_id" : "1993", "value" : 3850 }
-{ "_id" : "1981", "value" : 3409 }
-{ "_id" : "1994", "value" : 2329 }
-{ "_id" : "1980", "value" : 2071 }
-{ "_id" : "1979", "value" : 1599 }
-{ "_id" : "1995", "value" : 1373 }
-{ "_id" : "1978", "value" : 1143 }
-{ "_id" : "1977", "value" : 794 }
-{ "_id" : "1976", "value" : 581 }
+{ "_id" : "1989", "value" : 14979 }
+{ "_id" : "1988", "value" : 14625 }
+{ "_id" : "1987", "value" : 13337 }
+{ "_id" : "1990", "value" : 12683 }
+{ "_id" : "1986", "value" : 10994 }
+{ "_id" : "1991", "value" : 8308 }
+{ "_id" : "1985", "value" : 8253 }
+{ "_id" : "1984", "value" : 6576 }
+{ "_id" : "1992", "value" : 5573 }
+{ "_id" : "1983", "value" : 5549 }
+{ "_id" : "1982", "value" : 5077 }
+{ "_id" : "1993", "value" : 3751 }
+{ "_id" : "1981", "value" : 3361 }
+{ "_id" : "1994", "value" : 2287 }
+{ "_id" : "1980", "value" : 2048 }
+{ "_id" : "1979", "value" : 1579 }
+{ "_id" : "1995", "value" : 1353 }
+{ "_id" : "1978", "value" : 1130 }
+{ "_id" : "1977", "value" : 786 }
+{ "_id" : "1976", "value" : 572 }
 </pre>
 <p>这个结果基本符合预期。但是换个顺序之后的结果就很吓人了。</p>
 <pre>
@@ -143,26 +149,26 @@ if __name__ == '__main__':
 <p>既有九十多岁高龄的老爷爷，也有0岁的小娃娃。核实了几个。其实都是些80后。</p>
 <p>然后，我根据电话号码，再分析一下这些帐号所属城市的分布情况。</p>
 <pre>
-{ "_id" : "未知", "value" : 36449 }
-{ "_id" : "北京市", "value" : 6792 }
-{ "_id" : "上海市", "value" : 6605 }
-{ "_id" : "广东省深圳市", "value" : 3505 }
-{ "_id" : "广东省广州市", "value" : 3152 }
-{ "_id" : "四川省成都市", "value" : 2736 }
-{ "_id" : "湖北省武汉市", "value" : 2640 }
-{ "_id" : "浙江省杭州市", "value" : 2575 }
-{ "_id" : "江苏省南京市", "value" : 2060 }
-{ "_id" : "江苏省苏州市", "value" : 1958 }
-{ "_id" : "重庆市重庆", "value" : 1865 }
-{ "_id" : "天津市", "value" : 1858 }
-{ "_id" : "陕西省西安市", "value" : 1419 }
-{ "_id" : "浙江省温州市", "value" : 1402 }
-{ "_id" : "浙江省宁波市", "value" : 1383 }
-{ "_id" : "福建省福州市", "value" : 1371 }
-{ "_id" : "辽宁省沈阳市", "value" : 1311 }
-{ "_id" : "河南省郑州市", "value" : 1290 }
-{ "_id" : "黑龙江省哈尔滨市", "value" : 1238 }
-{ "_id" : "辽宁省大连市", "value" : 1173 }
+{ "_id" : "未知", "value" : 35765 }
+{ "_id" : "北京市", "value" : 6670 }
+{ "_id" : "上海市", "value" : 6486 }
+{ "_id" : "广东省深圳市", "value" : 3442 }
+{ "_id" : "广东省广州市", "value" : 3103 }
+{ "_id" : "四川省成都市", "value" : 2678 }
+{ "_id" : "湖北省武汉市", "value" : 2593 }
+{ "_id" : "浙江省杭州市", "value" : 2520 }
+{ "_id" : "江苏省南京市", "value" : 2020 }
+{ "_id" : "江苏省苏州市", "value" : 1916 }
+{ "_id" : "重庆市重庆", "value" : 1834 }
+{ "_id" : "天津市", "value" : 1832 }
+{ "_id" : "陕西省西安市", "value" : 1395 }
+{ "_id" : "浙江省温州市", "value" : 1379 }
+{ "_id" : "浙江省宁波市", "value" : 1363 }
+{ "_id" : "福建省福州市", "value" : 1352 }
+{ "_id" : "辽宁省沈阳市", "value" : 1295 }
+{ "_id" : "河南省郑州市", "value" : 1263 }
+{ "_id" : "黑龙江省哈尔滨市", "value" : 1215 }
+{ "_id" : "辽宁省大连市", "value" : 1151 }
 </pre>
 <p>当然，我使用的这个手机号到城市的数据库显然不太全。大概1/4的手机号都无法定位。从结果来看，北上广排前三也在预料之中。成都，武汉，杭州的排名也可以看出我国各地软件，网络发展的大概趋势了。</p>
 <p>相对欠发达的情况也可以明确地看出来。</p>
@@ -189,3 +195,4 @@ if __name__ == '__main__':
 { "_id" : "内蒙古乌兰查布", "value" : 6 }
 </pre>
 <strong>注意：我这里使用的是手机号定位。所以显示的地区是每个人的所在城市，并不是籍贯所在地。也就是说是12306主要用户当前所在城市。</strong>
+
