@@ -9,11 +9,11 @@ title: Ubuntu 在 Thinpad E430C上终于发声了
 <p>原因应该是内核中带了一些不兼容的驱动导致的把。自己再编译以下内核就可以了。</p>
 <p>我重新下了最新版的内核，编译，调整驱动后安装。已知都使用顺利也一直忙着。今天突然闲下来，想看个电影，才发现声卡驱动不起来。没声音。</p>
 <p>自己也尝试了大半天，没成功。后来查看系统启动日志，会发现有驱动每解码器</p>
-<p>
+<pre>
 cat /proc/asound/card*/codec* | grep Codec  
 Codec: Conexant CX20590   
 Codec: Intel CougarPoint HDMI 
-</p>
+</pre>
 <p>
 CONFIG_SND_HDA_CODEC_CONEXANT=y
 </p>
