@@ -1,0 +1,15 @@
+---
+layout: posts 
+title: freebsd 的 configure.ac 文件
+---
+
+<h2>{{ page.title }}</h2>
+<p>一个在ubuntu下可以正常编译的程序在freebsd下总是遇到各种问题。</p>
+<p>好像freebsd下./configure的时候总是不能自动去查找/usr/local/lib目录。freebsd还不像ubuntu一样在/etc/ld.so.conf中加上这个路径就可以。</p>
+<p>奇怪的是freebsd下ldconfig -r可以看到找到了/usr/local/lib目录下的库。但是configure.ac中写的AC_CHECK_LIB([mongoc-1.0], [main])就找不到这个库。</p>
+<p>苦查了大半天之后，终于找到一个可以接受的解决方法。在configure.ac文件中加入</p>
+<code>
+CFLAGS=“$CFLAGS -I/usr/local/include/”
+LDFLAGS="$LDFLAGS -L/usr/local/lib/"
+</code>
+<p>终于较好地解决了这个问题。</p>
