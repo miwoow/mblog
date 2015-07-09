@@ -1,0 +1,29 @@
+---
+layout: posts 
+title: Linux下安装chromium和flash插件的问题
+---
+
+<h2>{{ page.title }}</h2>
+
+<p>chrominum 从某个版本开始不在支持netscape的api了，导致原来的flash插件不能在chromium中使用了。</p>
+<p>所以原来网上那些下载libflash.so拷贝到plugins目录下之类的方法以及不能使用了。</p>
+
+<p>新的chromium支持的pepperflashplugin。所以需要安装这个flash插件才能使用。</p>
+
+<p>我原来在ubuntu下的时候是通过sudo apt-get install pepperflashplugin-nonfree 来安装的。不过仔细看看，他其实是从google下载了一个deb包，解压出里面的文件，然后拷贝到了chromium目录下的。</p>
+
+<p>因为我现在也换用了fedora，源里面更本就没有pepperflashplugin插件。所以也没法通过源直接安装。</p>\
+
+<p>先从 https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_43.0.2357.132-1_amd64.deb 下载了一个安装包。</p>
+<pre>
+  cp google-chrome-stable_43.0.2357.132-1_amd64.deb /tmp/
+  cd /tmp/
+  ar -x google-chrome-stable_43.0.2357.132-1_amd64.deb
+  xz -d data.tar.gz
+  tar xvf data.tar
+  sudo cp -rf /tmp/opt/google/chrome/PepperFlash /usr/lib64/chromium-browser/
+</pre>
+
+<p>重启浏览器就好了。</p>
+<p>为了方便，这里放个下载地址吧。<a href="{{ site.baseurl }}/static/PepperFlash.tar.gz">PepperFlash.tar.gz</a></p>
+
