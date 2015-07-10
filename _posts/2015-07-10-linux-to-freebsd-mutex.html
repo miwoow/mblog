@@ -1,0 +1,18 @@
+---
+layout: posts 
+title: linux 和 freebsd 的mutex区别
+---
+
+<h2>{{ page.title }}</h2>
+<p>今天碰到一个诡异的问题。一个在linux下运行完美的程序在freebsd下无法正常工作。跟踪了很久，最后定位在一个锁的位置。在程序中使用了一个锁，用来在多线程的时候锁定资源。这个锁在启动新线程之前，加锁。在新线程中，解锁。</p>
+<p>这个代码在Linux下运行就没有问题。但是迁移到freebsd下之后，这个锁一直unlock不掉。因为原来也没有检测unlock函数的返回值，所以也一直没有找到为什么。一步一步地排查，才发现是因为没有获取到锁。获取不到锁的原因就是在新线程中unlock失败。</p>
+<p>仔细看了一下freebsd的man手册发现，pthread_mutex_unlock的错误中就有一个：</p>
+<pre>
+[EPERM]            The current thread does not hold a lock on mutex.
+</pre>
+<p>而对应的Linux部分是：</p>
+<pre>
+EPERM              The current thread does not own the mutex.
+</pre>
+<p>这两个之间，可能有细微的差别。没有再仔细地去查差别了。反正问题是暂时解决了。</p>
+
