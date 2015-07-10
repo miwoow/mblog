@@ -14,5 +14,6 @@ title: linux 和 freebsd 的mutex区别
 <pre>
 EPERM              The current thread does not own the mutex.
 </pre>
+<p>解决方法是把加锁和解锁的操作都移动到了新的线程里。</p>
 <p>这两个之间，可能有细微的差别。没有再仔细地去查差别了。反正问题是暂时解决了。</p>
 
