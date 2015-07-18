@@ -20,10 +20,10 @@ title: Http 的 header部分编码问题
 我首先拿请求头来做的修改。为了能在django的template中正确显示中文。我给项目添加了一个filter。代码如下：
 
 `
-@register.filter()
-def decode_cn(value):
-    res = urllib.unquote(value)
-    return res
+	@register.filter()
+	def decode_cn(value):
+	    res = urllib.unquote(value)
+	    return res
 `
 
 在template中使用这个filter之后，界面显示是为一堆乱码。
@@ -35,11 +35,11 @@ def decode_cn(value):
 iso8859-1可以正确显示呢？ 代码就变成了下面这样：
 
 `
-@register.filter()
-def decode_cn(value):
-    res = urllib.unquote(value)
-    res = res.encode('iso8859-1')
-    return res
+	@register.filter()
+	def decode_cn(value):
+	    res = urllib.unquote(value)
+	    res = res.encode('iso8859-1')
+	    return res
 `
 
 终于，在template中显示出了中文。
@@ -56,15 +56,15 @@ def decode_cn(value):
 所以，最后代码变为：
 
 `
-@register.filter()
-def decode_cn(value):
-    res = urllib.unquote(value)
-    res_cn = res
-    try:
-	res_cn = res_cn.encode('iso8859-1')
-    except:
-	return res
-    return res_cn
+	@register.filter()
+	def decode_cn(value):
+	    res = urllib.unquote(value)
+	    res_cn = res
+	    try:
+		res_cn = res_cn.encode('iso8859-1')
+	    except:
+		return res
+	    return res_cn
 `
 
 总算是解决了这个问题。
