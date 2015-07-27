@@ -44,3 +44,15 @@ title: freebsd 使用总结
 因为有的防火墙会发送rst包来重置tcp链接。可以使用这个命令丢掉这些数据包，增加访问成功的可能性。
 
     ipfw add 110 deny tcp from IP地址 to any tcpflags rst
+
+对应的iptables命令：
+
+    iptables -A INPUT -t filter -p tcp --tcp-flags rst rst -s IP地址 -j DROP
+
+iptables的命令用在Android手机上还是挺好使的。
+
+### pkg install size mismatch 解决
+
+有的时候安装软件出现size mismatch导致安装失败。运行下面的命令解决。
+
+    sudo pkg update -f
