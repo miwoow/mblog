@@ -15,7 +15,7 @@ title: mongoengine中使用或查询
 
 ### 问题解决
 
-查了一下资料。原来mongoengine有一个Q的累。多个Q之间可以进行&和|计算。这样就可以执行与计算和或计算。
+查了一下资料。原来mongoengine有一个Q的类。多个Q之间可以进行&和\|计算。这样就可以执行与计算和或计算。
 
 	from mongnengine import Q
 
