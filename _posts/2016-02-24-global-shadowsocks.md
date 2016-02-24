@@ -5,6 +5,9 @@ title: Linux 全局 shadowsocks 代理
 
 ## {{ page.title }}
 
+
+####{{ page.date | date: "%Y-%m-%d" }}
+
 ### 起源
 
 今天在Ubuntu下编译OpenWRT。遇到一些软件包需要从*.org网站下载，无奈被墙。下载操作写在Makefile里。不好自己修改。
