@@ -1,6 +1,6 @@
 ---
 layout: posts
-title: GIT提交了一个肉鸡IP库
+title: GITHUB提交了一个肉鸡IP库
 ---
 
 ## {{ page.title }}
